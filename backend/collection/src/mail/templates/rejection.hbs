@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Rejection</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+
+      .email-container {
+        background-color: #fff;
+        padding: 30px;
+        max-width: 600px;
+        margin: 20px auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        color: #e74c3c;
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .reason {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      .gif {
+        display: block;
+        margin: 20px auto;
+        max-width: 100%;
+        border-radius: 8px;
+      }
+
+      .signature {
+        font-size: 16px;
+        text-align: center;
+        margin-top: 20px;
+        font-style: italic;
+        color: #555;
+      }
+
+      .noob {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2c3e50;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <h2>Hey {{name}} 😅,</h2>
+      <p>Your feedback on <strong>"{{service}}"</strong> has been <span style="color: #e74c3c; font-weight: bold;">**nuked**</span> by our mod squad 💥.</p>
+      
+      <div class="reason">
+        <p><strong>Reason:</strong> {{reason}}</p>
+      </div>
+      
+      <p>Don't take it personally... unless it was personal 😬</p>
+      
+      <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExenh2Z2tsd2p0NTk4dTVzMGRuOWZ2Z242dnU0bzhsM3R1amY2cWFqaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Mk6T7bHugAPMQ/giphy.gif" alt="Funny Dancing Cat GIF" class="gif">
+
+      <p class="noob">Better luck next time, noob 😎</p>
+      
+      <p class="signature">~ Your Friendly (but ruthless) Feedback Overlords</p>
+    </div>
+  </body>
+</html>

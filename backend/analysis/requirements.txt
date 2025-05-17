@@ -1,0 +1,9 @@
+motor==3.5.1
+vaderSentiment==3.3.2
+redis==5.0.8
+uvicorn==0.30.6
+fastapi==0.115.0
+strawberry-graphql==0.243.1
+pymongo==4.8.0
+python-dotenv==1.0.1
+nltk==3.9.1
