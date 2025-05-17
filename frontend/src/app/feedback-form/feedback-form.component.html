@@ -1,0 +1,175 @@
+<div class="feedback-container">
+  <div class="card">
+    <div class="card-header">
+      <h2>Submit Your Feedback</h2>
+      <p>We value your input to improve our services</p>
+    </div>
+
+    <div class="card-body">
+      <!-- Success message after form submission -->
+      <div *ngIf="success" class="success-message">
+        <div class="success-icon">✓</div>
+        <h3>Thank You for Your Feedback!</h3>
+        <p>We appreciate your input and will use it to improve our services.</p>
+        <button class="btn btn-primary" (click)="resetForm()">Submit Another Response</button>
+      </div>
+
+      <!-- Rejection message after feedback is rejected -->
+      <div *ngIf="rejected" class="rejection-message">
+        <div class="rejection-icon">!</div>
+        <h3>Feedback Not Accepted</h3>
+        <p>{{ rejectionReason }}</p>
+        <div class="rejection-actions">
+          <button class="btn btn-outline-secondary" (click)="tryAgain()">Edit Submission</button>
+          <button class="btn btn-primary" (click)="resetForm()">Start Over</button>
+        </div>
+      </div>
+
+      <!-- Feedback form -->
+      <form *ngIf="!success && !rejected" [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+        <!-- Name field -->
+        <div class="form-group">
+          <label for="name">Name <span class="required">*</span></label>
+          <input 
+            type="text" 
+            id="name" 
+            formControlName="name" 
+            class="form-control" 
+            [ngClass]="{ 'is-invalid': submitted && f['name'].errors }"
+            placeholder="Enter your name"
+          >
+          <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+            <div *ngIf="f['name'].errors['required']">Name is required</div>
+            <div *ngIf="f['name'].errors['minlength']">Name must be at least 2 characters</div>
+          </div>
+        </div>
+
+        <!-- Email field -->
+        <div class="form-group">
+          <label for="email">Email <span class="required">*</span></label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            class="form-control" 
+            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+            placeholder="Enter your email address"
+          >
+          <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Please enter a valid email address</div>
+          </div>
+        </div>
+
+        <!-- Feedback Type dropdown -->
+        <div class="form-group">
+          <label for="feedbackType">Feedback Type <span class="required">*</span></label>
+          <select 
+            id="feedbackType" 
+            formControlName="feedbackType" 
+            class="form-control"
+          >
+            <option *ngFor="let type of feedbackTypes" [value]="type.id">{{ type.name }}</option>
+          </select>
+        </div>
+
+        <!-- Service dropdown -->
+        <div class="form-group">
+          <label for="service">Service <span class="required">*</span></label>
+          <select 
+            id="service" 
+            formControlName="service" 
+            class="form-control"
+          >
+            <option *ngFor="let service of services" [value]="service.name">{{ service.name }}</option>
+          </select>
+        </div>
+
+        <!-- Message field -->
+        <div class="form-group">
+          <label for="message">Your Feedback <span class="required">*</span></label>
+          <textarea 
+            id="message" 
+            formControlName="message" 
+            rows="5" 
+            class="form-control" 
+            [ngClass]="{ 'is-invalid': submitted && f['message'].errors }"
+            placeholder="Please provide details about your feedback"
+          ></textarea>
+          <div *ngIf="submitted && f['message'].errors" class="invalid-feedback">
+            <div *ngIf="f['message'].errors['required']">Feedback message is required</div>
+            <div *ngIf="f['message'].errors['minlength']">Message must be at least 10 characters</div>
+          </div>
+        </div>
+
+        <!-- Star Rating -->
+        <div class="form-group">
+          <label>Rate Your Experience <span class="required">*</span></label>
+          <div class="rating-container">
+            <div class="rating">
+              <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                <span 
+                  class="star" 
+                  [class.active]="f['rating'].value >= star" 
+                  (click)="setRating(star)"
+                >★</span>
+              </ng-container>
+            </div>
+            <span class="rating-text">{{ f['rating'].value }} / 5</span>
+          </div>
+        </div>
+
+        <!-- Screenshot checkbox -->
+        <div class="form-group checkbox-group">
+          <div class="custom-control custom-checkbox">
+            <input 
+              type="checkbox" 
+              id="attachScreenshot" 
+              formControlName="attachScreenshot" 
+              class="custom-control-input"
+            >
+            <label class="custom-control-label" for="attachScreenshot">
+              Attach screenshot (will prompt after submission)
+            </label>
+          </div>
+        </div>
+
+        <!-- Terms checkbox -->
+        <div class="form-group checkbox-group">
+          <div class="custom-control custom-checkbox">
+            <input 
+              type="checkbox" 
+              id="agreeToTerms" 
+              formControlName="agreeToTerms" 
+              class="custom-control-input"
+              [ngClass]="{ 'is-invalid': submitted && f['agreeToTerms'].errors }"
+            >
+            <label class="custom-control-label" for="agreeToTerms">
+              I agree to the terms and conditions <span class="required">*</span>
+            </label>
+            <div *ngIf="submitted && f['agreeToTerms'].errors" class="invalid-feedback">
+              <div *ngIf="f['agreeToTerms'].errors['required']">You must agree to the terms and conditions</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error message display -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group submit-group">
+          <button 
+            type="submit" 
+            class="btn btn-primary btn-block" 
+            [disabled]="loading"
+          >
+            <span *ngIf="loading">Submitting...</span>
+            <span *ngIf="!loading">Submit Feedback</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

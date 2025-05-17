@@ -1,0 +1,155 @@
+<div class="dashboard-container">
+    <h1 class="dashboard-title">Feedback Analytics Dashboard</h1>
+  
+    <!-- Main loading indicator (only for initial load) -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loading-spinner"></div>
+      <p>Loading dashboard data...</p>
+    </div>
+  
+    <div class="dashboard-content" *ngIf="!isLoading">
+      <!-- Overall Feedback Analysis Section -->
+      <div class="card overall-feedback" *ngIf="feedbackAnalysis">
+        <h2>Overall Feedback Analysis</h2>
+        <div class="metrics-container">
+          <div class="metric">
+            <span class="metric-value">{{ feedbackAnalysis.averageRating | number: '1.1-1' }}</span>
+            <span class="metric-label">Average Rating</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">{{ feedbackAnalysis.totalFeedback }}</span>
+            <span class="metric-label">Total Feedback</span>
+          </div>
+        </div>
+  
+        <div class="charts-row">
+          <!-- Feedback Type Distribution -->
+          <div class="chart-container" *ngIf="feedbackAnalysis.feedbackTypeCounts?.length">
+            <h3>Feedback Type Distribution</h3>
+            <div class="pie-chart">
+              <div class="chart-legend">
+                <div class="legend-item" *ngFor="let item of feedbackAnalysis.feedbackTypeCounts">
+                  <div class="legend-color type-{{ item.key.toLowerCase() }}"></div>
+                  <div class="legend-label">{{ item.key }}: {{ item.value }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Sentiment Distribution -->
+          <div class="chart-container" *ngIf="feedbackAnalysis.sentimentCounts?.length">
+            <h3>Sentiment Distribution</h3>
+            <div class="pie-chart">
+              <div class="chart-legend">
+                <div class="legend-item" *ngFor="let item of feedbackAnalysis.sentimentCounts">
+                  <div class="legend-color sentiment-{{ item.key.toLowerCase() }}"></div>
+                  <div class="legend-label">{{ item.key }}: {{ item.value }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Service-specific Analysis Section -->
+      <div class="service-analysis-section">
+        <div class="service-selector">
+          <label for="service-select">Select Service:</label>
+          <select 
+            id="service-select" 
+            [(ngModel)]="selectedService" 
+            (change)="onServiceChange()"
+            [disabled]="isServiceLoading">
+            <option *ngFor="let service of services" [value]="service.name">{{ service.name }}</option>
+          </select>
+        </div>
+  
+        <!-- Service loading indicator (only shown when changing services) -->
+        <div class="loading-container service-loading" *ngIf="isServiceLoading">
+          <div class="loading-spinner"></div>
+          <p>Loading service data...</p>
+        </div>
+  
+        <div class="card service-analysis" *ngIf="serviceAnalysis && !isServiceLoading">
+          <h2>{{ serviceAnalysis.service }} Analysis</h2>
+          
+          <div class="metrics-container">
+            <div class="metric">
+              <span class="metric-value">{{ serviceAnalysis.averageRating | number: '1.1-1' }}</span>
+              <span class="metric-label">Average Rating</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">{{ serviceAnalysis.totalFeedback }}</span>
+              <span class="metric-label">Feedback Count</span>
+            </div>
+            <div class="metric">
+              <span class="metric-value">{{ serviceAnalysis.averageSentiment | number: '1.1-1' }}</span>
+              <span class="metric-label">Avg. Sentiment</span>
+            </div>
+          </div>
+  
+          <!-- Sentiment Breakdown -->
+          <div class="sentiment-breakdown">
+            <h3>Sentiment Breakdown</h3>
+            <div class="progress-bars">
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Positive</span>
+                  <span>{{ calculatePercentage(serviceAnalysis.sentimentBreakdown.positive, serviceAnalysis.totalFeedback) }}%</span>
+                </div>
+                <div class="progress-bar">
+                  <div 
+                    class="progress-value sentiment-positive" 
+                    [style.width.%]="calculatePercentage(serviceAnalysis.sentimentBreakdown.positive, serviceAnalysis.totalFeedback)">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Neutral</span>
+                  <span>{{ calculatePercentage(serviceAnalysis.sentimentBreakdown.neutral, serviceAnalysis.totalFeedback) }}%</span>
+                </div>
+                <div class="progress-bar">
+                  <div 
+                    class="progress-value sentiment-neutral" 
+                    [style.width.%]="calculatePercentage(serviceAnalysis.sentimentBreakdown.neutral, serviceAnalysis.totalFeedback)">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-label">
+                  <span>Negative</span>
+                  <span>{{ calculatePercentage(serviceAnalysis.sentimentBreakdown.negative, serviceAnalysis.totalFeedback) }}%</span>
+                </div>
+                <div class="progress-bar">
+                  <div 
+                    class="progress-value sentiment-negative" 
+                    [style.width.%]="calculatePercentage(serviceAnalysis.sentimentBreakdown.negative, serviceAnalysis.totalFeedback)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Top Keywords -->
+          <div class="top-keywords" *ngIf="serviceAnalysis.topKeywords?.length">
+            <h3>Top Keywords</h3>
+            <div class="keyword-tags">
+              <span class="keyword-tag" *ngFor="let keyword of serviceAnalysis.topKeywords">
+                {{ keyword }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Empty state message -->
+    <div class="empty-state" *ngIf="!isLoading && !feedbackAnalysis">
+      <div class="empty-icon">📊</div>
+      <h2>No feedback data available</h2>
+      <p>There is currently no feedback data to analyze. Check back later or contact support if you believe this is an error.</p>
+    </div>
+  </div>

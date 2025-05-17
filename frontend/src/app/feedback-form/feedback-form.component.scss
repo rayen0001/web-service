@@ -1,0 +1,409 @@
+// Variables
+$primary-color: #3f51b5;
+$primary-dark: #303f9f;
+$success-color: #28a745;
+$error-color: #dc3545;
+$warning-color: #ffc107;
+$text-color: #333;
+$background-color: #f9f9f9;
+$border-color: #ddd;
+$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+$hover-transition: 0.3s ease;
+$transition-fast: 0.2s ease;
+$font-size-base: 1rem;
+$font-family-base: 'Roboto', sans-serif;
+
+.feedback-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem;
+  font-family: $font-family-base;
+}
+
+.card {
+  width: 100%;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: $box-shadow;
+  background-color: #fff;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow $hover-transition;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.card-header {
+  background-color: $primary-color;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+
+  h2 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: #f1f1f1;
+    }
+  }
+
+  p {
+    margin-top: 0.5rem;
+    opacity: 0.85;
+    font-size: 1rem;
+  }
+}
+
+.card-body {
+  padding: 2rem;
+  background-color: $background-color;
+  border-top: 1px solid #f0f0f0;
+
+  .form-group {
+    margin-bottom: 2rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: $text-color;
+    }
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid $border-color;
+    border-radius: 8px;
+    font-size: $font-size-base;
+    transition: all $transition-fast ease;
+
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+
+    &.is-invalid {
+      border-color: $error-color;
+    }
+  }
+
+  .invalid-feedback {
+    color: $error-color;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;  // Vertically aligns both checkbox and label text
+    gap: 0.5rem;          // Space between checkbox and label
+    margin-bottom: 1rem;   // Optional: Adjust spacing between checkbox groups if needed
+
+    .custom-control {
+      display: flex;
+      align-items: center;  // Vertically center checkbox and label
+      position: relative;
+
+      .custom-control-input {
+        position: relative;
+        z-index: 1;
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      .custom-control-label {
+        margin-bottom: 0;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        color: $text-color;
+        display: inline-flex;
+        align-items: center; // Ensures label text is aligned with checkbox
+      }
+    }
+  }
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 0.8rem 1.5rem;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background-color: $primary-color;
+  color: white;
+  transition: all $hover-transition ease;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background-color: $primary-dark;
+    border-color: $primary-dark;
+  }
+
+  &.btn-block {
+    display: block;
+    width: 100%;
+  }
+  
+  &.btn-outline-secondary {
+    background-color: transparent;
+    border-color: #6c757d;
+    color: #6c757d;
+    
+    &:hover {
+      background-color: #6c757d;
+      color: white;
+    }
+  }
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+
+  .rating {
+    display: flex;
+    margin-right: 1.25rem;
+
+    .star {
+      font-size: 1.75rem;
+      color: #ddd;
+      cursor: pointer;
+      transition: color $hover-transition;
+
+      &.active {
+        color: #ffc107;
+      }
+
+      &:hover {
+        color: #ffc107;
+      }
+    }
+  }
+
+  .rating-text {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: $text-color;
+  }
+}
+
+.success-message {
+  text-align: center;
+  padding: 2rem 1rem;
+
+  .success-icon {
+    width: 70px;
+    height: 70px;
+    background-color: $success-color;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem;
+    margin: 0 auto 1.5rem;
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+    color: $text-color;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    color: #666;
+  }
+
+  .btn {
+    margin-top: 1.25rem;
+  }
+}
+
+// New rejection message styles
+.rejection-message {
+  text-align: center;
+  padding: 2rem 1rem;
+  animation: fadeIn 0.4s ease;
+
+  .rejection-icon {
+    width: 70px;
+    height: 70px;
+    background-color: $error-color;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.25rem;
+    font-weight: bold;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 4px 12px rgba($error-color, 0.3);
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+    color: $error-color;
+    font-weight: 600;
+  }
+
+  p {
+    margin-bottom: 1.75rem;
+    color: #666;
+    line-height: 1.6;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .rejection-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    
+    .btn {
+      min-width: 140px;
+      
+      &:first-child {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0.2em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border 0.75s linear infinite;
+  margin-right: 0.75rem;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.alert {
+  padding: 0.8rem 1.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  &.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+  }
+}
+
+.required {
+  color: $error-color;
+  margin-left: 2px;
+}
+
+// Responsive Adjustments
+@media (max-width: 768px) {
+  .feedback-container {
+    padding: 2rem;
+  }
+
+  .card-header {
+    padding: 1.5rem;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .card-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-control {
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 0.8rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .rating .star {
+    font-size: 1.5rem;
+  }
+  
+  .rejection-message {
+    .rejection-icon {
+      width: 60px;
+      height: 60px;
+      font-size: 1.9rem;
+    }
+    
+    .rejection-actions {
+      flex-direction: column;
+      gap: 0.75rem;
+      
+      .btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Extra small screens
+@media (max-width: 480px) {
+  .card-header h2 {
+    font-size: 1.4rem;
+  }
+  
+  .rejection-message {
+    padding: 1.5rem 0.75rem;
+    
+    h3 {
+      font-size: 1.3rem;
+    }
+  }
+}
