@@ -1,0 +1,58 @@
+"""Date with time (isoformat)"""
+scalar DateTime
+
+type Feedback {
+  id: String!
+  name: String!
+  email: String!
+  feedbackType: String!
+  service: String!
+  message: String!
+  rating: Int!
+  attachScreenshot: Boolean!
+  agreeToTerms: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  sentiment: String!
+  sentimentScore: Float!
+  topKeywords: [Keyword!]!
+}
+
+type FeedbackAnalysis {
+  averageRating: Float!
+  totalFeedback: Int!
+  feedbackTypeCounts: [KeyValuePair!]!
+  sentimentCounts: [KeyValuePair!]!
+}
+
+type KeyValuePair {
+  key: String!
+  value: Int!
+}
+
+type Keyword {
+  word: String!
+  frequency: Int!
+}
+
+type Query {
+  feedbacks(limit: Int! = 10, skip: Int! = 0): [Feedback!]!
+  feedbackById(id: String!): Feedback
+  feedbackAnalysis: FeedbackAnalysis!
+  serviceAnalysis(service: String!): ServiceAnalysis!
+}
+
+type SentimentBreakdown {
+  positive: Int!
+  neutral: Int!
+  negative: Int!
+}
+
+type ServiceAnalysis {
+  service: String!
+  totalFeedback: Int!
+  averageRating: Float!
+  averageSentiment: Float!
+  sentimentBreakdown: SentimentBreakdown!
+  topKeywords: [String!]!
+}
