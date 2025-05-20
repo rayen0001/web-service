@@ -185,4 +185,4 @@ Ce projet a été réalisé par :
 
 ## Licence
 
-À compléter : Informations sur la licence (ex. : MIT, Apache).
+This project is licensed under the MIT License.
